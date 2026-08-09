@@ -8,7 +8,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-//#define SUPER_MINI
+#define SUPER_MINI
 #define DEEP_SLEEP
 
 // BLE Company ID (適当な値を設定してください)
@@ -47,7 +47,7 @@
   #define PIN_DS18B20_ONEWIRE 6
 
   // 水分センサー(Moisture sensor) LM393電源
-  #define PIN_LM393_1_VCC_VCC 7
+  #define PIN_LM393_1_VCC 7
   #define PIN_LM393_2_VCC 8
 
   // 水分センサー(Moisture sensor) ADS1115 I2C
@@ -85,6 +85,18 @@ bool use_ads1115 = false;
 #define STATUS_ADS1115_FOUND   0b00000001
 #define STATUS_TEMP_CH0_FOUND  0b00000010
 #define STATUS_TEMP_CH1_FOUND  0b00000100
+
+int16_t readMoisture(uint8_t ch)
+{
+    long sum = 0;
+
+    for(int i=0;i<16;i++){
+        sum += ads.readADC_SingleEnded(ch);
+        delay(2);
+    }
+
+    return sum / 16;
+}
 
 
 void setup() {
@@ -149,7 +161,7 @@ void setup() {
   digitalWrite(PIN_LM393_2_VCC, HIGH);
 
   digitalWrite(LED, LOW);  //LOWで点灯
-  delay(500);
+  delay(1000);
   digitalWrite(LED, HIGH);
 
   //--------------------------------------------------
@@ -159,8 +171,10 @@ void setup() {
   int16_t moisture_ch1 = -32768;
   
   if(use_ads1115){
-    moisture_ch0 = ads.readADC_SingleEnded(0);
-    moisture_ch1 = ads.readADC_SingleEnded(1);
+//    moisture_ch0 = ads.readADC_SingleEnded(0);
+//    moisture_ch1 = ads.readADC_SingleEnded(1);
+    moisture_ch0 = readMoisture(0);
+    moisture_ch1 = readMoisture(1);
   }
 
   //--------------------------------------------------
