@@ -17,7 +17,7 @@ ESP32C3を使用したBLE対応土壌センサーです。
 - オリジナル土壌センサーの作成（ハードウェア編）  
 https://qiita.com/Choco-chip_melon-pan/items/13de4425bc2a87f4784d
 
-- オリジナル土壌センサーの作成（ソフトウェア編）
+- オリジナル土壌センサーの作成（ソフトウェア編）  
 https://qiita.com/Choco-chip_melon-pan/items/4fca6810401bd4c99525
 
 
